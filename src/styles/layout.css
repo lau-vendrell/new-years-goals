@@ -1,0 +1,68 @@
+.page {
+  height: 100%;
+  width: 100%;
+  padding: 28px 32px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.appHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.appShell {
+  height: 100%;
+  width: 100%;
+  background: var(--color-bg-base);
+  display: grid;
+  grid-template-columns: 80px repeat(7, minmax(0, 1fr)) 80px;
+  column-gap: 40px;
+  align-items: stretch;
+}
+
+.canvasColumn {
+  grid-column: 2 / span 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.listColumn {
+  grid-column: 6 / span 3;
+  display: flex;
+  flex-direction: column;
+  padding-top: 40px;
+}
+
+.muted {
+  color: var(--color-content-mid);
+}
+
+.empty {
+  padding: 12px;
+  text-align: center;
+}
+
+@media (max-width: 960px) {
+  .appShell {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    row-gap: 24px;
+  }
+
+  .canvasColumn,
+  .listColumn {
+    grid-column: 1 / -1;
+  }
+
+  .listColumn {
+    padding-top: 0;
+  }
+}

@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/constants.ts","./src/main.tsx","./src/types.ts","./src/components/aboutmodal.tsx","./src/components/goalcard.tsx","./src/components/goalscanvas.tsx","./src/components/goalstablesidebar.tsx","./src/components/header.tsx","./src/hooks/usegoalsmanager.ts","./src/utils/storage.ts","./src/utils/time.ts"],"version":"5.9.3"}

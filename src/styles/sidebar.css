@@ -1,0 +1,160 @@
+.listPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.listHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filtersRow {
+  display: flex;
+  gap: 8px;
+}
+
+.goalsCounter {
+  font-size: 13px;
+  color: var(--color-content-mid);
+}
+
+.filterChip {
+  border-radius: 999px;
+  border: 1px solid var(--color-border-low);
+  background: var(--color-bg-canvas);
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--color-content-mid);
+  outline: none;
+}
+
+.filterChip:hover {
+  background: var(--color-bg-mid);
+}
+
+.filterChip--active,
+.filterChip--activeCompleted {
+  border-color: var(--color-border-high);
+  background: var(--color-bg-mid);
+  color: var(--color-content-high);
+}
+
+.goalsTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  table-layout: fixed;
+}
+
+.goalsTable td {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border-low);
+  vertical-align: middle;
+}
+
+.colIndex {
+  width: 40px;
+  padding-right: 12px;
+  padding-left: 20px;
+  padding-right: 8px;
+}
+
+.colTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.colStatus {
+  text-align: right;
+  padding-right: 12px;
+}
+
+.addRow {
+  cursor: pointer;
+  color: var(--color-content-high);
+}
+
+.addRow:hover {
+  background: var(--color-bg-base);
+}
+
+.goalsTable tr.rowSelectedActive td {
+  background: var(--color-active-bg);
+}
+
+.goalsTable tr.rowSelectedCompleted td {
+  background: var(--color-success-bg);
+}
+
+.goalsTable tr.rowSelectedActive td:first-child,
+.goalsTable tr.rowSelectedCompleted td:first-child {
+  position: relative;
+  padding-left: 8px;
+}
+
+.goalsTable tr.rowSelectedActive td:first-child::before,
+.goalsTable tr.rowSelectedCompleted td:first-child::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+}
+
+.goalsTable tr.rowSelectedActive td:first-child::before {
+  background: var(--color-active-content);
+}
+
+.goalsTable tr.rowSelectedCompleted td:first-child::before {
+  background: var(--color-success-content);
+}
+
+.statusActive {
+  color: var(--color-active-content);
+}
+
+.statusCompleted {
+  color: var(--color-success-content);
+}
+
+.pagination {
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--color-content-high);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.paginationBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  color: var(--color-content-high);
+  padding: 2px 4px;
+}
+
+.paginationBtn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.paginationBtn:not(:disabled):hover {
+  color: var(--color-content-high);
+}
+
+.paginationInfo {
+  text-align: center;
+}
+
+.paginationTotal {
+  margin-left: 8px;
+  color: var(--color-content-mid);
+}

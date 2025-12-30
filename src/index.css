@@ -1,0 +1,76 @@
+:root {
+  /* Base */
+  --color-bg-base: #F4F4F4;           /* Background Base */
+  --color-bg-canvas: #FFFFFF;         /* Background Canvas */
+  --color-bg-mid: #E9E9E9;            /* Background Mid */
+
+  /* Borders */
+  --color-border-low: #BEBEBE;        /* Border Low */
+  --color-border-high: #818185;       /* Border High */
+
+  /* Content */
+  --color-content-high: #0F0F0F;      /* Content High */
+  --color-content-mid: #545456;       /* Content Mid */
+
+  /* Semantic: active / primary */
+  --color-active-content: #007AFF;    /* Semantic Active Content */
+  --color-active-bg: #E0EAF5;         /* Semantic Active Background */
+
+  /* Semantic: success */
+  --color-success-content: #10792B;   /* Semantic Success Content */
+  --color-success-bg: #DDE8E0;        /* Semantic Success Background */
+
+  /* Semantic: danger */
+  --color-danger-content: #DF0000;    /* Semantic Danger Content */
+
+  /* Typography */
+  --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, Arial;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --shadow-note: 0 1px 0 rgba(0, 0, 0, 0.08);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--color-bg-base);
+  color: var(--color-content-high);
+  font-family: var(--font);
+  letter-spacing: -0.01em;
+  position: relative;
+  font-weight: 400;
+  overflow: hidden;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  z-index: 0;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+button,
+input {
+  font-family: inherit;
+}
