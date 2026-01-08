@@ -13,7 +13,6 @@ interface Props {
   totalPages: number;
   onPrevPage(): void;
   onNextPage(): void;
-  totalGoals: number;
 }
 
 export default function GoalsTableSidebar({
@@ -27,7 +26,6 @@ export default function GoalsTableSidebar({
   totalPages,
   onPrevPage,
   onNextPage,
-  totalGoals,
   counts
 }: Props) {
   return (
@@ -122,7 +120,6 @@ export default function GoalsTableSidebar({
         >
           ›
         </button>
-        <span className="paginationTotal">{totalGoals} objetivos</span>
       </div>
     </div>
   );

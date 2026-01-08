@@ -4,6 +4,7 @@ import AboutModal from './components/AboutModal';
 import GoalsCanvas from './components/GoalsCanvas';
 import GoalsTableSidebar from './components/GoalsTableSidebar';
 import Header from './components/Header';
+import NewGoalModal from './components/NewGoalModal';
 import { useGoalsManager } from './hooks/useGoalsManager';
 import { Goal } from './types';
 import './styles/layout.css';
@@ -21,6 +22,7 @@ type DragState = {
 
 function App() {
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [newGoalOpen, setNewGoalOpen] = useState(false);
   const [dragging, setDragging] = useState<DragState | null>(null);
 
   const {
@@ -33,9 +35,8 @@ function App() {
     filteredGoals,
     visibleGoals,
     counts,
-    totalGoals,
     pagination: { currentPage, totalPages, goToPrevPage, goToNextPage },
-    handleAddGoalClick,
+    addGoal,
     handleToggleComplete,
     handleDelete,
     handleUpdate,
@@ -67,6 +68,16 @@ function App() {
 
   const registerCardRef = (id: string) => (el: HTMLDivElement | null) => {
     cardRefs.current[id] = el;
+  };
+
+  const handleCreateGoal = (values: { title: string; identityPhrase: string }) => {
+    addGoal({
+      id: crypto.randomUUID(),
+      title: values.title,
+      identityPhrase: values.identityPhrase,
+      completed: false,
+      createdAt: Date.now()
+    });
   };
 
   const startDrag = (e: ReactPointerEvent, goal: Goal) => {
@@ -118,7 +129,7 @@ function App() {
   return (
     <div className="page">
       <Header onOpenAbout={() => setAboutOpen(true)} />
-      <div className="appShell">
+      <div className="appShell layoutGrid">
         <div className="canvasColumn">
           <GoalsCanvas
             goals={filteredGoals}
@@ -140,16 +151,20 @@ function App() {
             onChangeFilter={setFilter}
             selectedId={selectedId}
             onSelect={handleSidebarSelect}
-            onAddGoalClick={handleAddGoalClick}
+            onAddGoalClick={() => setNewGoalOpen(true)}
             currentPage={currentPage}
             totalPages={totalPages}
             onPrevPage={goToPrevPage}
             onNextPage={goToNextPage}
             counts={counts}
-            totalGoals={totalGoals}
           />
         </aside>
       </div>
+      <NewGoalModal
+        open={newGoalOpen}
+        onClose={() => setNewGoalOpen(false)}
+        onSubmit={handleCreateGoal}
+      />
       <AboutModal open={aboutOpen} onClose={() => setAboutOpen(false)} />
     </div>
   );

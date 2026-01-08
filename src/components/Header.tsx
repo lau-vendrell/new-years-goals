@@ -4,11 +4,13 @@ interface Props {
 
 export default function Header({ onOpenAbout }: Props) {
   return (
-    <header className="appHeader">
-      <span>OBJETIVOS 2026</span>
-      <button className="link-button" type="button" onClick={onOpenAbout}>
-        About
-      </button>
+    <header className="topHeader">
+      <div className="topHeaderInner layoutGrid">
+        <div className="brand">OBJETIVOS 2026</div>
+        <button className="link-button aboutLink" type="button" onClick={onOpenAbout}>
+          ABOUT
+        </button>
+      </div>
     </header>
   );
 }

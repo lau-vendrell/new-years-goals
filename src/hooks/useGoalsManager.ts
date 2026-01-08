@@ -88,19 +88,6 @@ export function useGoalsManager() {
     setPage(0);
   }, []);
 
-  const handleAddGoalClick = useCallback(() => {
-    const title = window.prompt('Nuevo objetivo: título');
-    if (!title || !title.trim()) return;
-    const identityPhrase = window.prompt('Quién quiero ser respecto a este objetivo') || '';
-    addGoal({
-      id: crypto.randomUUID(),
-      title: title.trim(),
-      identityPhrase: identityPhrase.trim(),
-      completed: false,
-      createdAt: Date.now()
-    });
-  }, [addGoal]);
-
   const handleToggleComplete = useCallback((id: string) => {
     setGoals((prev) =>
       prev.map((g) => (g.id === id ? { ...g, completed: !g.completed } : g))
@@ -139,14 +126,13 @@ export function useGoalsManager() {
     filteredGoals,
     visibleGoals,
     counts,
-    totalGoals: filteredGoals.length,
     pagination: {
       currentPage,
       totalPages,
       goToPrevPage,
       goToNextPage
     },
-    handleAddGoalClick,
+    addGoal,
     handleToggleComplete,
     handleDelete,
     handleUpdate,
