@@ -13,7 +13,7 @@
   background: var(--color-bg-canvas);
   border-radius: 16px;
   border: 1px solid var(--color-border-low);
-  padding: 20px;
+  padding: 40px;
   max-width: 420px;
   box-shadow: var(--shadow-note);
   z-index: 10000;
@@ -49,14 +49,41 @@
   font-weight: var(--fw-regular);
 }
 
+.goal-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 16px;
+}
+
+.goal-modal-close {
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--color-content-high);
+  flex: 0 0 auto;
+}
+
+.goal-modal-close:hover {
+  color: var(--color-content-high);
+}
+
 .goal-modal-title {
-  margin: 0 0 32px 0;
+  margin: 0;
   font-size: var(--fs-13);
   font-weight: var(--fw-regular);
   letter-spacing: var(--ls-wide);
   text-transform: uppercase;
   line-height: var(--lh-tight);
   color: var(--color-content-high);
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .goal-modal-form {
@@ -68,7 +95,6 @@
 .goal-modal-field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
 }
 
 .goal-modal-label {
@@ -84,7 +110,7 @@
   border-bottom: 1px solid var(--color-border-low);
   background: transparent;
   padding: 6px 2px;
-  font-size: var(--fs-13);
+  font-size: var(--fs-16);
   font-weight: var(--fw-regular);
   line-height: var(--lh-default);
   font-family: var(--font-sans);
@@ -105,17 +131,22 @@
 }
 
 .goal-modal-actions {
-  margin-top: 48px;
+  margin-top: 16px;
   display: flex;
   justify-content: flex-end;
-  gap: 16px;
+  gap: 12px;
 }
 
 .goal-modal-btn {
   border-radius: 8px;
   padding: 10px 18px;
-  font: inherit;
   cursor: pointer;
+  min-width: 100px;
+
+  font-family: var(--font-sans);
+  font-size: var(--fs-13);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-default);
 }
 
 .goal-modal-btn-cancel {
@@ -142,5 +173,21 @@
 @media (min-width: 1280px) {
   .goal-modal-card {
     width: 600px;
+  }
+}
+
+@media (max-width: 900px) {
+  .goal-modal-overlay {
+    padding: 16px 0;
+    align-items: center;
+  }
+
+  .goal-modal-card {
+    width: calc(100vw - 32px);
+    max-width: 520px;
+    padding: 24px;
+    max-height: calc(100vh - 32px);
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }

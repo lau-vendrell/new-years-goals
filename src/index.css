@@ -46,6 +46,14 @@
   --shadow-note: 0 1px 0 rgba(0, 0, 0, 0.08);
 }
 
+.text-body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-13);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-default);
+  color: var(--color-content-high);
+}
+
 *,
 *::before,
 *::after {

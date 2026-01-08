@@ -47,7 +47,9 @@ export default function NewGoalModal({ open, onClose, onSubmit }: Props) {
       onClick={onClose}
     >
       <div className="goal-modal-card" onClick={(e) => e.stopPropagation()}>
-        <h2 className="goal-modal-title">NUEVO OBJETIVO</h2>
+        <div className="goal-modal-header">
+          <h2 className="goal-modal-title">NUEVO OBJETIVO</h2>
+        </div>
         <form className="goal-modal-form" onSubmit={handleSubmit}>
           <label className="goal-modal-field">
             <span className="goal-modal-label">Objetivo</span>
@@ -57,6 +59,7 @@ export default function NewGoalModal({ open, onClose, onSubmit }: Props) {
               name="title"
               value={title}
               onChange={(event) => setTitle(event.target.value)}
+              placeholder="Ejemplo: Hacer ejercicio 3 veces por semana"
               autoFocus
             />
           </label>
@@ -68,6 +71,7 @@ export default function NewGoalModal({ open, onClose, onSubmit }: Props) {
               name="identityPhrase"
               value={identityPhrase}
               onChange={(event) => setIdentityPhrase(event.target.value)}
+              placeholder="Ejemplo: Una persona activa"
             />
           </label>
           <div className="goal-modal-actions">
