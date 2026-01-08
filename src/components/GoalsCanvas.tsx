@@ -29,7 +29,7 @@ export default function GoalsCanvas({
 }: Props) {
   return (
     <div className="goalsCanvas" ref={canvasRef}>
-      {goals.length === 0 && <p className="muted empty">Añade tu primera nota.</p>}
+      {goals.length === 0 && <p className="muted empty">Añade tu primer objetivo</p>}
       {goals.map((goal) => {
         const selected = selectedId === goal.id;
         const selectionClass = selected
