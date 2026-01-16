@@ -143,3 +143,26 @@
     height: 60vh;
   }
 }
+
+.canvas-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.canvas-empty-illustration {
+  width: min(360px, 80%);
+  height: auto;
+  color: var(--color-content-mid);
+}
+
+.canvas-empty-text {
+  margin-top: 24px;
+  text-align: center;
+  color: var(--color-content-mid);
+  font-size: var(--fs-14);
+}
