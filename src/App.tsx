@@ -169,9 +169,9 @@ function App() {
     window.addEventListener('pointerup', handleUp);
     window.addEventListener('pointercancel', handleUp);
     return () => {
-      window.removeEventListener('pointermove', handleMove, listenerOptions);
-      window.removeEventListener('pointerup', handleUp);
-      window.removeEventListener('pointercancel', handleUp);
+      window.removeEventListener('pointermove', handleMove, false);
+      window.removeEventListener('pointerup', handleUp, false);
+      window.removeEventListener('pointercancel', handleUp, false);
     };
   }, [dragging, updateGoalPosition]);
 
