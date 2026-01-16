@@ -1,26 +1,29 @@
-# Objetivos 2026
+# Goals 2026 ✨
 
-SPA en React + Vite (TypeScript) para crear y gestionar objetivos anuales con persistencia en localStorage y diseño editorial minimalista.
+This project started as a personal design and development experiment to explore:
 
-## Scripts
+- how goals feel when they all coexist at the same time  
+- the balance between structure (table) and visual chaos (canvas)  
+- how to build a simple interface with no backend and minimal friction  
 
-- `npm install` - instala dependencias (requiere acceso a npm)
-- `npm run dev` - arranca el entorno de desarrollo en `http://localhost:5173`
-- `npm run build` - compila la versión de producción
-- `npm run preview` - sirve la build ya compilada
+It's designed for personal use: fast, calm, and account-free.
+<br>
 
-## Funcionalidad
+### · Privacy
 
-- Añadir, editar inline, completar y eliminar objetivos.
-- Filtro All/Activos/Completados + contador.
-- Sidebar tipo tabla que navega a las cards y resalta la seleccionada.
-- Persistencia automática en localStorage.
-- Modal About y reloj en vivo en el header.
+This project has **no backend**.
 
-## Estructura
+- No login
+- No data is sent to any server
+- All information is stored locally using the browser’s `localStorage`
 
-- `src/App.tsx` - composición principal, layout y coordinación de vistas.
-- `src/components/` - Header, AboutModal, GoalCard, GoalsCanvas, GoalsTableSidebar.
-- `src/hooks/` - lógica de estado y persistencia (`useGoalsManager`).
-- `src/constants.ts` - constantes compartidas como `PAGE_SIZE`.
-- `src/utils/` - helpers para localStorage y reloj.
+Each person only sees their own goals.
+<br>
+
+### · Tech stack
+
+- React
+- Vite
+- TypeScript
+- CSS (design tokens + layout grid)
+- GitHub Pages (deployment)
