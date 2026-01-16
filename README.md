@@ -27,3 +27,6 @@ Each person only sees their own goals.
 - TypeScript
 - CSS (design tokens + layout grid)
 - GitHub Pages (deployment)
+<br>
+
+This is a personal project. Feel free to explore the code, but please credit the author if you reuse it.
