@@ -18,12 +18,21 @@ type DragState = {
   offsetY: number;
   noteWidth: number;
   noteHeight: number;
+  pointerId: number;
+  pointerType: string;
+  startX: number;
+  startY: number;
+  isActive: boolean;
+  target: HTMLElement | null;
 };
+
+const DRAG_THRESHOLD_PX = 8;
 
 function App() {
   const [aboutOpen, setAboutOpen] = useState(false);
   const [newGoalOpen, setNewGoalOpen] = useState(false);
   const [dragging, setDragging] = useState<DragState | null>(null);
+  const bodyOverflowRef = useRef<string | null>(null);
 
   const {
     filter,
@@ -81,27 +90,52 @@ function App() {
   };
 
   const startDrag = (e: ReactPointerEvent, goal: Goal) => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const cardRect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    const target = e.currentTarget as HTMLElement;
+    const cardRect = target.getBoundingClientRect();
     const canvasRect = canvas.getBoundingClientRect();
     const offsetX = e.clientX - cardRect.left;
     const offsetY = e.clientY - cardRect.top;
-    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    target.setPointerCapture(e.pointerId);
     setDragging({
       id: goal.id,
       offsetX,
       offsetY,
       noteWidth: cardRect.width,
-      noteHeight: cardRect.height
+      noteHeight: cardRect.height,
+      pointerId: e.pointerId,
+      pointerType: e.pointerType,
+      startX: e.clientX,
+      startY: e.clientY,
+      isActive: e.pointerType === 'mouse',
+      target
     });
   };
 
   useEffect(() => {
     if (!dragging) return;
     const handleMove = (e: PointerEvent) => {
+      if (e.pointerId !== dragging.pointerId) return;
       const canvas = canvasRef.current;
       if (!canvas) return;
+      let isActive = dragging.isActive;
+      if (!isActive) {
+        const dx = e.clientX - dragging.startX;
+        const dy = e.clientY - dragging.startY;
+        if (Math.hypot(dx, dy) <= DRAG_THRESHOLD_PX) {
+          return;
+        }
+        isActive = true;
+        setDragging((prev) => (prev ? { ...prev, isActive: true } : prev));
+        if (dragging.pointerType === 'touch' && bodyOverflowRef.current === null) {
+          bodyOverflowRef.current = document.body.style.overflow;
+          document.body.style.overflow = 'hidden';
+        }
+      }
+      if (!isActive) return;
+      e.preventDefault();
       const canvasRect = canvas.getBoundingClientRect();
       const left = e.clientX - canvasRect.left - dragging.offsetX;
       const top = e.clientY - canvasRect.top - dragging.offsetY;
@@ -114,15 +148,30 @@ function App() {
       updateGoalPosition(dragging.id, relX, relY);
     };
 
-    const handleUp = () => {
+    const handleUp = (e: PointerEvent) => {
+      if (e.pointerId !== dragging.pointerId) return;
       setDragging(null);
+      if (dragging.target && dragging.target.hasPointerCapture(dragging.pointerId)) {
+        try {
+          dragging.target.releasePointerCapture(dragging.pointerId);
+        } catch {
+          // Ignore if capture was already released.
+        }
+      }
+      if (bodyOverflowRef.current !== null) {
+        document.body.style.overflow = bodyOverflowRef.current;
+        bodyOverflowRef.current = null;
+      }
     };
 
-    window.addEventListener('pointermove', handleMove);
+    const listenerOptions = { passive: false } as const;
+    window.addEventListener('pointermove', handleMove, listenerOptions);
     window.addEventListener('pointerup', handleUp);
+    window.addEventListener('pointercancel', handleUp);
     return () => {
-      window.removeEventListener('pointermove', handleMove);
+      window.removeEventListener('pointermove', handleMove, listenerOptions);
       window.removeEventListener('pointerup', handleUp);
+      window.removeEventListener('pointercancel', handleUp);
     };
   }, [dragging, updateGoalPosition]);
 
