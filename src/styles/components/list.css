@@ -87,11 +87,13 @@
 
 .goalsTable tr {
   border-bottom: var(--border-1) solid var(--color-border-low);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .goalsTable td {
   padding: var(--space-10) var(--space-8);
   vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .colIndex {
