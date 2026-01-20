@@ -132,7 +132,6 @@
 
 .goalsTable tr.rowSelectedActive,
 .goalsTable tr.rowSelectedCompleted {
-  border-bottom: var(--border-1) solid var(--color-border-low);
   border-left: 0;
   border-right: 0;
   border-top: 0;
@@ -236,7 +235,7 @@
   }
 
   .countsMobile {
-    display: block;
+    display: none;
     margin-top: var(--space-0);
   }
 
