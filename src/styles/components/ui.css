@@ -1,0 +1,14 @@
+.link-button {
+  background: none;
+  border: none;
+  color: var(--color-content-high);
+  cursor: pointer;
+  padding: var(--space-0);
+  font-size: var(--fs-13);
+  line-height: var(--lh-default);
+}
+
+.link-button:hover {
+  color: var(--color-active-content);
+  text-decoration: underline;
+}

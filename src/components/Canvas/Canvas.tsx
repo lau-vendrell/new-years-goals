@@ -1,7 +1,8 @@
 import type { PointerEvent, RefObject } from 'react';
-import { Goal } from '../types';
-import CanvasEmptyState from './CanvasEmptyState';
-import GoalCard from './GoalCard';
+import { GOAL_STATUS } from '../../constants';
+import type { Goal } from '../../types';
+import EmptyState from './EmptyState';
+import NoteCard from './NoteCard';
 
 interface Props {
   goals: Goal[];
@@ -16,7 +17,7 @@ interface Props {
   onDragStart(event: PointerEvent, goal: Goal): void;
 }
 
-export default function GoalsCanvas({
+export default function Canvas({
   goals,
   canvasRef,
   selectedId,
@@ -31,22 +32,21 @@ export default function GoalsCanvas({
   return (
     <div className="goalsCanvas" ref={canvasRef}>
       {goals.length === 0 ? (
-        <CanvasEmptyState />
+        <EmptyState />
       ) : (
         <>
           {goals.map((goal) => {
             const selected = selectedId === goal.id;
             const selectionClass = selected
-              ? goal.completed
+              ? goal.status === GOAL_STATUS.completed
                 ? 'noteSelectedCompleted'
                 : 'noteSelectedActive'
               : '';
             return (
-              <GoalCard
+              <NoteCard
                 key={goal.id}
                 ref={registerCardRef(goal.id)}
                 goal={goal}
-                selected={selected}
                 selectionClass={selectionClass}
                 onToggleComplete={onToggleComplete}
                 onDelete={onDelete}

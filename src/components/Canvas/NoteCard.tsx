@@ -1,9 +1,12 @@
 import { forwardRef, useEffect, useState, KeyboardEvent } from 'react';
-import { Goal } from '../types';
+import { GOAL_STATUS, UI_TEXT } from '../../constants';
+import type { Goal } from '../../types';
+import { formatIdentitySentence, formatToggleGoalStatusAria } from '../../utils/formatters';
+import Button from '../UI/Button';
+import Input from '../UI/Input';
 
 interface Props {
   goal: Goal;
-  selected: boolean;
   isFocused: boolean;
   selectionClass?: string;
   onToggleComplete(id: string): void;
@@ -13,11 +16,10 @@ interface Props {
   onDragStart?(e: React.PointerEvent): void;
 }
 
-const GoalCard = forwardRef<HTMLDivElement, Props>(
+const NoteCard = forwardRef<HTMLDivElement, Props>(
   (
     {
       goal,
-      selected,
       isFocused,
       selectionClass,
       onToggleComplete,
@@ -30,26 +32,26 @@ const GoalCard = forwardRef<HTMLDivElement, Props>(
   ) => {
     const [isEditing, setIsEditing] = useState(false);
     const [title, setTitle] = useState(goal.title);
-    const [identity, setIdentity] = useState(goal.identityPhrase);
+    const [identity, setIdentity] = useState(goal.identitySentence);
 
     useEffect(() => {
       if (!isEditing) {
         setTitle(goal.title);
-        setIdentity(goal.identityPhrase);
+        setIdentity(goal.identitySentence);
       }
     }, [goal, isEditing]);
 
     const handleSave = () => {
       if (!title.trim()) {
         setTitle(goal.title);
-        setIdentity(goal.identityPhrase);
+        setIdentity(goal.identitySentence);
         setIsEditing(false);
         return;
       }
       onUpdate({
         ...goal,
         title: title.trim(),
-        identityPhrase: identity.trim()
+        identitySentence: identity.trim()
       });
       setIsEditing(false);
     };
@@ -62,21 +64,23 @@ const GoalCard = forwardRef<HTMLDivElement, Props>(
       if (e.key === 'Escape') {
         e.preventDefault();
         setTitle(goal.title);
-        setIdentity(goal.identityPhrase);
+        setIdentity(goal.identitySentence);
         setIsEditing(false);
       }
     };
 
     const style = {
-      left: `${goal.x * 100}%`,
-      top: `${goal.y * 100}%`,
-      transform: `rotate(${goal.rot}deg)`
+      left: `${goal.position.x * 100}%`,
+      top: `${goal.position.y * 100}%`,
+      transform: `rotate(${goal.position.rot}deg)`
     } as const;
+
+    const isCompleted = goal.status === GOAL_STATUS.completed;
 
     return (
       <article
         ref={ref}
-        className={`note ${selectionClass || ''} ${goal.completed ? 'is-completed' : ''} ${
+        className={`note ${selectionClass || ''} ${isCompleted ? 'is-completed' : ''} ${
           isFocused ? 'is-focused' : ''
         }`}
         style={style}
@@ -91,39 +95,41 @@ const GoalCard = forwardRef<HTMLDivElement, Props>(
       >
         <div className="goal-card__header">
           <label className="checkbox-line" onClick={(e) => e.stopPropagation()}>
-            <input
+            <Input
               type="checkbox"
-              checked={goal.completed}
+              checked={isCompleted}
               onChange={() => onToggleComplete(goal.id)}
-              aria-label={`Marcar ${goal.title} como ${goal.completed ? 'no completado' : 'completado'}`}
+              aria-label={formatToggleGoalStatusAria(goal.title, goal.status)}
             />
-            <span className="pill tiny">{goal.completed ? 'Completado' : 'Activo'}</span>
+            <span className="pill tiny">
+              {isCompleted ? UI_TEXT.statusCompleted : UI_TEXT.statusActive}
+            </span>
           </label>
         </div>
 
         <div className="goal-card__body">
           {isEditing ? (
             <>
-              <input
+              <Input
                 className="inline-input"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 onKeyDown={handleKeyDown}
                 autoFocus
-                aria-label="Editar objetivo"
+                aria-label={UI_TEXT.editGoalAria}
               />
-              <input
+              <Input
                 className="inline-input subtle"
                 value={identity}
                 onChange={(e) => setIdentity(e.target.value)}
                 onKeyDown={handleKeyDown}
-                aria-label="Editar frase de identidad"
+                aria-label={UI_TEXT.editIdentityAria}
               />
             </>
           ) : (
             <>
               <h3 className="goal-title">{goal.title}</h3>
-              <p className="identity">Quién quiero ser: {goal.identityPhrase || '...'}</p>
+              <p className="identity">{formatIdentitySentence(goal.identitySentence)}</p>
             </>
           )}
         </div>
@@ -131,21 +137,21 @@ const GoalCard = forwardRef<HTMLDivElement, Props>(
         <div className="goal-card__footer" onClick={(e) => e.stopPropagation()}>
           {isEditing ? (
             <>
-              <button className="pill-button" type="button" onClick={handleSave}>
-                Guardar
-              </button>
-              <button className="link-button" type="button" onClick={() => setIsEditing(false)}>
-                Cancelar
-              </button>
+              <Button className="pill-button" onClick={handleSave}>
+                {UI_TEXT.save}
+              </Button>
+              <Button className="link-button" onClick={() => setIsEditing(false)}>
+                {UI_TEXT.cancel}
+              </Button>
             </>
           ) : (
             <>
-              <button className="link-button" type="button" onClick={() => setIsEditing(true)}>
-                Editar
-              </button>
-              <button className="link-button danger" type="button" onClick={() => onDelete(goal.id)}>
-                Eliminar
-              </button>
+              <Button className="link-button" onClick={() => setIsEditing(true)}>
+                {UI_TEXT.edit}
+              </Button>
+              <Button className="link-button danger" onClick={() => onDelete(goal.id)}>
+                {UI_TEXT.delete}
+              </Button>
             </>
           )}
         </div>
@@ -154,6 +160,6 @@ const GoalCard = forwardRef<HTMLDivElement, Props>(
   }
 );
 
-GoalCard.displayName = 'GoalCard';
+NoteCard.displayName = 'NoteCard';
 
-export default GoalCard;
+export default NoteCard;

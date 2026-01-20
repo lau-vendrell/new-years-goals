@@ -1,4 +1,6 @@
-export default function CanvasEmptyState() {
+import { UI_TEXT } from '../../constants';
+
+export default function EmptyState() {
   return (
     <div className="canvas-empty">
       <svg
@@ -367,7 +369,7 @@ export default function CanvasEmptyState() {
           </clipPath>
         </defs>
       </svg>
-      <p className="canvas-empty-text">No hay objetivos todavía</p>
+      <p className="canvas-empty-text">{UI_TEXT.emptyCanvas}</p>
     </div>
   );
 }

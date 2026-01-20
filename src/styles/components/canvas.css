@@ -3,7 +3,7 @@
   flex: 1;
   height: auto;
   background: var(--color-bg-canvas);
-  border-radius: 24px;
+  border-radius: var(--radius-lg);
   position: relative;
   overflow: hidden;
   min-height: 0;
@@ -12,14 +12,14 @@
 .note {
   position: absolute;
   background: var(--color-bg-canvas);
-  border-radius: 16px;
-  border: 1px solid var(--color-border-low);
-  padding: 16px;
+  border-radius: var(--radius-sm);
+  border: var(--border-1) solid var(--color-border-low);
+  padding: var(--space-16);
   font-size: var(--fs-13);
   line-height: var(--lh-default);
   cursor: grab;
-  transition: background 120ms ease, border-color 120ms ease;
-  width: 240px;
+  transition: background var(--duration-fast) ease, border-color var(--duration-fast) ease;
+  width: var(--size-note-width);
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
@@ -27,7 +27,7 @@
 }
 
 .note.is-focused {
-  z-index: 2;
+  z-index: var(--z-note-focus);
 }
 
 .noteSelectedActive {
@@ -50,26 +50,26 @@
 
 .note.is-completed .goal-title {
   text-decoration: line-through;
-  opacity: 0.75;
+  opacity: var(--opacity-muted);
 }
 
 .goal-card__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: var(--space-20);
 }
 
 .checkbox-line {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-6);
   cursor: pointer;
 }
 
 .checkbox-line input {
-  width: 16px;
-  height: 16px;
+  width: var(--space-16);
+  height: var(--space-16);
 }
 
 .pill.tiny {
@@ -81,18 +81,18 @@
 .goal-card__body {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-8);
 }
 
 .goal-title {
-  margin: 0;
+  margin: var(--space-0);
   font-size: var(--fs-14);
   font-weight: var(--fw-regular);
   line-height: var(--lh-tight);
 }
 
 .identity {
-  margin: 0;
+  margin: var(--space-0);
   color: var(--color-content-mid);
   font-size: var(--fs-13);
   line-height: var(--lh-default);
@@ -100,8 +100,8 @@
 
 .goal-card__footer {
   display: flex;
-  gap: 8px;
-  margin-top: 20px;
+  gap: var(--space-8);
+  margin-top: var(--space-20);
   justify-content: flex-start;
 }
 
@@ -109,26 +109,11 @@
   color: var(--color-danger-content);
 }
 
-.link-button {
-  background: none;
-  border: none;
-  color: var(--color-content-high);
-  cursor: pointer;
-  padding: 0;
-  font-size: var(--fs-13);
-  line-height: var(--lh-default);
-}
-
-.link-button:hover {
-  color: var(--color-active-content);
-  text-decoration: underline;
-}
-
 .inline-input {
   border: none;
-  border-bottom: 1px solid var(--color-border-low);
-  border-radius: 0;
-  padding: 6px 2px;
+  border-bottom: var(--border-1) solid var(--color-border-low);
+  border-radius: var(--space-0);
+  padding: var(--space-6) var(--space-2);
   font-size: var(--fs-14);
   background: transparent;
   font-weight: var(--fw-regular);
@@ -137,7 +122,7 @@
 
 .inline-input:focus {
   outline: none;
-  border-bottom: 1px solid var(--color-active-content);
+  border-bottom: var(--border-1) solid var(--color-active-content);
 }
 
 .inline-input.subtle {
@@ -155,14 +140,21 @@
 }
 
 .canvas-empty-illustration {
-  width: min(360px, 80%);
+  width: min(var(--size-empty-illustration), 80%);
   height: auto;
   color: var(--color-content-mid);
 }
 
 .canvas-empty-text {
-  margin-top: 24px;
+  margin-top: var(--space-24);
   text-align: center;
   color: var(--color-content-mid);
   font-size: var(--fs-14);
+}
+
+@media (max-width: 960px) {
+  .goalsCanvas {
+    height: var(--size-canvas-mobile-height);
+    flex: 0 0 auto;
+  }
 }

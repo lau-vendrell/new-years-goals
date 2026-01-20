@@ -1,16 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import type { PointerEvent as ReactPointerEvent } from 'react';
-import AboutModal from './components/AboutModal';
-import GoalsCanvas from './components/GoalsCanvas';
-import GoalsTableSidebar from './components/GoalsTableSidebar';
-import Header from './components/Header';
-import NewGoalModal from './components/NewGoalModal';
+import { Canvas } from './components/Canvas';
+import { Header } from './components/Header';
+import { GoalsTable } from './components/List';
+import { AboutModal, NewGoalModal } from './components/Modals';
+import { UI_NUMBERS } from './constants';
 import { useGoalsManager } from './hooks/useGoalsManager';
-import { Goal } from './types';
+import type { Goal, NewGoalInput } from './types';
 import './styles/layout.css';
-import './styles/canvas.css';
-import './styles/sidebar.css';
-import './styles/modal.css';
+import './styles/components/canvas.css';
+import './styles/components/list.css';
+import './styles/components/modal.css';
+import './styles/components/ui.css';
 
 type DragState = {
   id: string;
@@ -25,8 +26,6 @@ type DragState = {
   isActive: boolean;
   target: HTMLElement | null;
 };
-
-const DRAG_THRESHOLD_PX = 8;
 
 function App() {
   const [aboutOpen, setAboutOpen] = useState(false);
@@ -61,7 +60,7 @@ function App() {
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'center' });
       el.classList.add('flash');
-      window.setTimeout(() => el.classList.remove('flash'), 600);
+      window.setTimeout(() => el.classList.remove('flash'), UI_NUMBERS.flashDurationMs);
     }
   };
 
@@ -79,14 +78,8 @@ function App() {
     cardRefs.current[id] = el;
   };
 
-  const handleCreateGoal = (values: { title: string; identityPhrase: string }) => {
-    addGoal({
-      id: crypto.randomUUID(),
-      title: values.title,
-      identityPhrase: values.identityPhrase,
-      completed: false,
-      createdAt: Date.now()
-    });
+  const handleCreateGoal = (values: NewGoalInput) => {
+    addGoal(values);
   };
 
   const startDrag = (e: ReactPointerEvent, goal: Goal) => {
@@ -124,7 +117,7 @@ function App() {
       if (!isActive) {
         const dx = e.clientX - dragging.startX;
         const dy = e.clientY - dragging.startY;
-        if (Math.hypot(dx, dy) <= DRAG_THRESHOLD_PX) {
+        if (Math.hypot(dx, dy) <= UI_NUMBERS.dragThreshold) {
           return;
         }
         isActive = true;
@@ -154,9 +147,7 @@ function App() {
       if (dragging.target && dragging.target.hasPointerCapture(dragging.pointerId)) {
         try {
           dragging.target.releasePointerCapture(dragging.pointerId);
-        } catch {
-          // Ignore if capture was already released.
-        }
+        } catch {}
       }
       if (bodyOverflowRef.current !== null) {
         document.body.style.overflow = bodyOverflowRef.current;
@@ -181,7 +172,7 @@ function App() {
       <main className="mainContainer layoutGrid">
         <div className="mainInner appShell">
           <div className="canvasColumn">
-            <GoalsCanvas
+            <Canvas
               goals={filteredGoals}
               canvasRef={canvasRef}
               selectedId={selectedId}
@@ -195,7 +186,7 @@ function App() {
             />
           </div>
           <aside className="listColumn">
-            <GoalsTableSidebar
+            <GoalsTable
               goals={visibleGoals}
               filter={filter}
               onChangeFilter={setFilter}

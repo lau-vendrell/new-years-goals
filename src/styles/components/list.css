@@ -1,7 +1,7 @@
 .listPanel {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: var(--space-24);
   min-height: 0;
 }
 
@@ -14,15 +14,21 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--space-12);
   flex-wrap: wrap;
+}
+
+.filtersBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
 }
 
 .filtersRow {
   display: flex;
-  gap: 8px;
+  gap: var(--space-8);
   flex: 1 1 auto;
-  min-width: 220px;
+  min-width: var(--size-filters-min-width);
 }
 
 .goalsCounter {
@@ -39,13 +45,17 @@
 
 .countsMobile {
   display: none;
+  font-size: var(--fs-13);
+  line-height: var(--lh-default);
+  color: var(--color-content-mid);
+  white-space: nowrap;
 }
 
 .filterChip {
-  border-radius: 999px;
-  border: 1px solid var(--color-border-low);
+  border-radius: var(--radius-pill);
+  border: var(--border-1) solid var(--color-border-low);
   background: var(--color-bg-canvas);
-  padding: 6px 14px;
+  padding: var(--space-6) var(--space-14);
   font-family: var(--font-sans);
   font-size: var(--fs-13);
   font-weight: var(--fw-regular);
@@ -75,17 +85,19 @@
   flex: 0 0 auto;
 }
 
+.goalsTable tr {
+  border-bottom: var(--border-1) solid var(--color-border-low);
+}
+
 .goalsTable td {
-  padding: 10px 0;
-  border-bottom: 1px solid var(--color-border-low);
+  padding: var(--space-10) var(--space-8);
   vertical-align: middle;
 }
 
 .colIndex {
-  width: 40px;
-  padding-right: 12px;
-  padding-left: 20px;
-  padding-right: 8px;
+  width: var(--size-index-column);
+  padding-right: var(--space-8);
+  padding-left: var(--space-8);
 }
 
 .colTitle {
@@ -96,7 +108,7 @@
 
 .colStatus {
   text-align: right;
-  padding-right: 12px;
+  padding-right: var(--space-8);
 }
 
 .addRow {
@@ -116,10 +128,20 @@
   background: var(--color-success-bg);
 }
 
+.goalsTable tr.rowSelectedActive,
+.goalsTable tr.rowSelectedCompleted {
+  border-bottom: var(--border-1) solid var(--color-border-low);
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  outline: none;
+  box-shadow: none;
+}
+
 .goalsTable tr.rowSelectedActive td:first-child,
 .goalsTable tr.rowSelectedCompleted td:first-child {
   position: relative;
-  padding-left: 8px;
+  padding-left: var(--space-8);
 }
 
 .goalsTable tr.rowSelectedActive td:first-child::before,
@@ -129,7 +151,7 @@
   left: 0;
   top: 0;
   bottom: 0;
-  width: 2px;
+  width: var(--size-indicator);
 }
 
 .goalsTable tr.rowSelectedActive td:first-child::before {
@@ -149,14 +171,14 @@
 }
 
 .pagination {
-  margin-top: 0;
+  margin-top: var(--space-0);
   font-size: var(--fs-12);
   line-height: var(--lh-default);
   color: var(--color-content-high);
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 4px;
+  gap: var(--space-4);
 }
 
 .paginationBtn {
@@ -165,11 +187,11 @@
   cursor: pointer;
   font: inherit;
   color: var(--color-content-high);
-  padding: 2px 4px;
+  padding: var(--space-2) var(--space-4);
 }
 
 .paginationBtn:disabled {
-  opacity: 0.35;
+  opacity: var(--opacity-disabled);
   cursor: default;
 }
 
@@ -182,13 +204,29 @@
 }
 
 .paginationTotal {
-  margin-left: 8px;
+  margin-left: var(--space-8);
   color: var(--color-content-mid);
 }
 
 @media (max-width: 960px) {
   .listPanel {
-    gap: 24px;
+    gap: var(--space-24);
+  }
+
+  .listHeader {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filtersBlock {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-12);
+  }
+
+  .goalsCounter {
+    display: none;
   }
 
   .countsDesktop {
@@ -197,24 +235,11 @@
 
   .countsMobile {
     display: block;
-  }
-
-  .goalsTable td {
-    padding-left: 8px;
-    padding-right: 8px;
-  }
-
-  .colIndex {
-    padding-left: 8px;
-    padding-right: 8px;
-  }
-
-  .colStatus {
-    padding-right: 8px;
+    margin-top: var(--space-0);
   }
 
   .pagination {
-    margin-top: 0;
+    margin-top: var(--space-0);
   }
 }
 

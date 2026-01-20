@@ -1,0 +1,91 @@
+:root {
+  --color-bg-base: #F4F4F4;
+  --color-bg-canvas: #FFFFFF;
+  --color-bg-mid: #E9E9E9;
+  --color-border-low: #BEBEBE;
+  --color-border-high: #818185;
+  --color-content-high: #0F0F0F;
+  --color-content-mid: #545456;
+  --color-active-content: #007AFF;
+  --color-active-bg: #E0EAF5;
+  --color-success-content: #10792B;
+  --color-success-bg: #DDE8E0;
+  --color-danger-content: #DF0000;
+  --color-overlay: rgba(0, 0, 0, 0.25);
+  --color-white: #FFFFFF;
+
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fs-11: 11px;
+  --fs-12: 12px;
+  --fs-13: 13px;
+  --fs-14: 14px;
+  --fs-16: 16px;
+  --fs-20: 20px;
+  --lh-solid: 1;
+  --lh-tight: 1.2;
+  --lh-default: 1.4;
+  --lh-relaxed: 1.6;
+  --ls-none: 0;
+  --ls-tight: -0.01em;
+  --ls-wide: 0.06em;
+
+  --space-0: 0px;
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-14: 14px;
+  --space-16: 16px;
+  --space-18: 18px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-60: 60px;
+  --space-80: 80px;
+
+  --radius-xs: 8px;
+  --radius-sm: 16px;
+  --radius-md: 20px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+
+  --border-1: 1px;
+  --border-2: 2px;
+
+  --shadow-note: 0 1px 0 rgba(0, 0, 0, 0.08);
+
+  --size-grid-gutter: 80px;
+  --size-note-width: 240px;
+  --size-filters-min-width: 220px;
+  --size-index-column: 40px;
+  --size-empty-illustration: 360px;
+  --size-modal-max: 420px;
+  --size-modal-wide: 600px;
+  --size-modal-narrow: 520px;
+  --size-modal-min: 100px;
+  --size-canvas-mobile-height: 60vh;
+  --size-screen-height: 100vh;
+  --size-indicator: 2px;
+
+  --opacity-disabled: 0.35;
+  --opacity-disabled-strong: 0.5;
+  --opacity-hover: 0.92;
+  --opacity-muted: 0.75;
+  --opacity-noise: 0.06;
+
+  --duration-fast: 120ms;
+
+  --z-modal-overlay: 900;
+  --z-modal: 1000;
+  --z-note-focus: 2;
+
+  --bg-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+}
