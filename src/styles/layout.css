@@ -1,11 +1,13 @@
 .page {
   height: 100%;
+  min-height: 100%;
   width: 100%;
-  padding: 28px 32px;
+  padding-top: 48px;
+  padding-bottom: 80px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 48px;
 }
 
 .layoutGrid {
@@ -20,7 +22,6 @@
 
 .topHeaderInner {
   align-items: center;
-  height: 64px;
   font-size: var(--fs-14);
   letter-spacing: var(--ls-wide);
   text-transform: uppercase;
@@ -42,23 +43,50 @@
 
 .appShell {
   height: 100%;
+  min-height: 0;
   width: 100%;
   background: var(--color-bg-base);
   align-items: stretch;
 }
 
+.mainContainer {
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  box-sizing: border-box;
+  flex: 1;
+  min-height: 0;
+}
+
+.mainInner {
+  grid-column: 2 / span 7;
+  display: grid;
+  grid-template-columns: 4fr 3fr;
+  column-gap: 40px;
+  align-items: stretch;
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+}
+
 .canvasColumn {
-  grid-column: 2 / span 4;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  min-width: 0;
+  min-height: 0;
 }
 
 .listColumn {
-  grid-column: 6 / span 3;
   display: flex;
   flex-direction: column;
-  padding-top: 40px;
+  padding-top: 0;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .muted {
@@ -71,9 +99,28 @@
 }
 
 @media (max-width: 960px) {
-  .appShell {
-    grid-template-rows: auto auto;
-    row-gap: 24px;
+  .page {
+    height: auto;
+    min-height: auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 24px;
+    padding-right: 24px;
+    overflow: visible;
+  }
+
+  .mainContainer {
+    display: block;
+    flex: none;
+    min-height: auto;
+    overflow: visible;
+  }
+
+  .mainInner {
+    grid-template-columns: 1fr;
+    row-gap: 40px;
+    height: auto;
+    min-height: auto;
   }
 
   .canvasColumn,
@@ -82,7 +129,12 @@
   }
 
   .listColumn {
+    order: 1;
     padding-top: 0;
+  }
+
+  .canvasColumn {
+    order: 2;
   }
 
   .topHeaderInner {
@@ -97,30 +149,5 @@
   .aboutLink {
     grid-column: 2;
     justify-self: end;
-  }
-}
-
-@media (max-width: 900px) {
-  .page {
-    height: auto;
-    min-height: 100vh;
-  }
-
-  .appShell {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "list"
-      "canvas";
-    row-gap: 24px;
-    height: auto;
-  }
-
-  .listColumn {
-    grid-area: list;
-  }
-
-  .canvasColumn {
-    grid-area: canvas;
   }
 }

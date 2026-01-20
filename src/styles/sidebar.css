@@ -1,7 +1,13 @@
 .listPanel {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
+  min-height: 0;
+}
+
+.listContent {
+  flex: 0 0 auto;
+  overflow: visible;
 }
 
 .listHeader {
@@ -25,6 +31,14 @@
   color: var(--color-content-mid);
   flex: 0 0 auto;
   white-space: nowrap;
+}
+
+.countsDesktop {
+  display: inline;
+}
+
+.countsMobile {
+  display: none;
 }
 
 .filterChip {
@@ -58,6 +72,7 @@
   font-size: var(--fs-13);
   line-height: var(--lh-default);
   table-layout: fixed;
+  flex: 0 0 auto;
 }
 
 .goalsTable td {
@@ -134,7 +149,7 @@
 }
 
 .pagination {
-  margin-top: 16px;
+  margin-top: 0;
   font-size: var(--fs-12);
   line-height: var(--lh-default);
   color: var(--color-content-high);
@@ -169,6 +184,38 @@
 .paginationTotal {
   margin-left: 8px;
   color: var(--color-content-mid);
+}
+
+@media (max-width: 960px) {
+  .listPanel {
+    gap: 24px;
+  }
+
+  .countsDesktop {
+    display: none;
+  }
+
+  .countsMobile {
+    display: block;
+  }
+
+  .goalsTable td {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .colIndex {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .colStatus {
+    padding-right: 8px;
+  }
+
+  .pagination {
+    margin-top: 0;
+  }
 }
 
 @media (max-width: 720px) {

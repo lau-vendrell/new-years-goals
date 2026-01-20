@@ -178,37 +178,39 @@ function App() {
   return (
     <div className="page">
       <Header onOpenAbout={() => setAboutOpen(true)} />
-      <div className="appShell layoutGrid">
-        <div className="canvasColumn">
-          <GoalsCanvas
-            goals={filteredGoals}
-            canvasRef={canvasRef}
-            selectedId={selectedId}
-            focusedId={focusedId}
-            registerCardRef={registerCardRef}
-            onCardSelect={handleCardSelect}
-            onToggleComplete={handleToggleComplete}
-            onDelete={handleDelete}
-            onUpdate={handleUpdate}
-            onDragStart={startDrag}
-          />
+      <main className="mainContainer layoutGrid">
+        <div className="mainInner appShell">
+          <div className="canvasColumn">
+            <GoalsCanvas
+              goals={filteredGoals}
+              canvasRef={canvasRef}
+              selectedId={selectedId}
+              focusedId={focusedId}
+              registerCardRef={registerCardRef}
+              onCardSelect={handleCardSelect}
+              onToggleComplete={handleToggleComplete}
+              onDelete={handleDelete}
+              onUpdate={handleUpdate}
+              onDragStart={startDrag}
+            />
+          </div>
+          <aside className="listColumn">
+            <GoalsTableSidebar
+              goals={visibleGoals}
+              filter={filter}
+              onChangeFilter={setFilter}
+              selectedId={selectedId}
+              onSelect={handleSidebarSelect}
+              onAddGoalClick={() => setNewGoalOpen(true)}
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPrevPage={goToPrevPage}
+              onNextPage={goToNextPage}
+              counts={counts}
+            />
+          </aside>
         </div>
-        <aside className="listColumn">
-          <GoalsTableSidebar
-            goals={visibleGoals}
-            filter={filter}
-            onChangeFilter={setFilter}
-            selectedId={selectedId}
-            onSelect={handleSidebarSelect}
-            onAddGoalClick={() => setNewGoalOpen(true)}
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPrevPage={goToPrevPage}
-            onNextPage={goToNextPage}
-            counts={counts}
-          />
-        </aside>
-      </div>
+      </main>
       <NewGoalModal
         open={newGoalOpen}
         onClose={() => setNewGoalOpen(false)}

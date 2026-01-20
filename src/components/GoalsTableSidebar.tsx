@@ -28,6 +28,8 @@ export default function GoalsTableSidebar({
   onNextPage,
   counts
 }: Props) {
+  const totalCount = counts.active + counts.completed;
+
   return (
     <div className="listPanel">
       <div className="listHeader">
@@ -55,52 +57,57 @@ export default function GoalsTableSidebar({
           </button>
         </div>
         <div className="goalsCounter">
-          {counts.active} Activos · {counts.completed} Completados
+          <span className="countsDesktop">
+            {counts.active} Activos · {counts.completed} Completados
+          </span>
+          <span className="countsMobile">{totalCount} Objetivos</span>
         </div>
       </div>
 
-      <table className="goalsTable">
-        <tbody>
-          <tr className="addRow" onClick={onAddGoalClick}>
-            <td className="colIndex">+</td>
-            <td className="colTitle">Añadir objetivo</td>
-            <td className="colStatus"></td>
-          </tr>
-          {goals.length === 0 && (
-            <tr>
-              <td className="colIndex muted">–</td>
-              <td className="colTitle muted">Nada por aquí todavía</td>
+      <div className="listContent">
+        <table className="goalsTable">
+          <tbody>
+            <tr className="addRow" onClick={onAddGoalClick}>
+              <td className="colIndex">+</td>
+              <td className="colTitle">Añadir objetivo</td>
               <td className="colStatus"></td>
             </tr>
-          )}
-          {goals.map((goal, idx) => {
-            const isSelected = selectedId === goal.id;
-            const rowClass = isSelected
-              ? goal.completed
-                ? 'rowSelectedCompleted'
-                : 'rowSelectedActive'
-              : '';
-            return (
-              <tr
-                key={goal.id}
-                className={rowClass}
-                onClick={() => onSelect(goal.id)}
-                role="listitem"
-              >
-                <td className="colIndex">
-                  {String(idx + 1 + currentPage * PAGE_SIZE).padStart(2, '0')}
-                </td>
-                <td className="colTitle">{goal.title}</td>
-                <td className="colStatus">
-                  <span className={goal.completed ? 'statusCompleted' : 'statusActive'}>
-                    {goal.completed ? 'Completado' : 'Activo'}
-                  </span>
-                </td>
+            {goals.length === 0 && (
+              <tr>
+                <td className="colIndex muted">–</td>
+                <td className="colTitle muted">Nada por aquí todavía</td>
+                <td className="colStatus"></td>
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            )}
+            {goals.map((goal, idx) => {
+              const isSelected = selectedId === goal.id;
+              const rowClass = isSelected
+                ? goal.completed
+                  ? 'rowSelectedCompleted'
+                  : 'rowSelectedActive'
+                : '';
+              return (
+                <tr
+                  key={goal.id}
+                  className={rowClass}
+                  onClick={() => onSelect(goal.id)}
+                  role="listitem"
+                >
+                  <td className="colIndex">
+                    {String(idx + 1 + currentPage * PAGE_SIZE).padStart(2, '0')}
+                  </td>
+                  <td className="colTitle">{goal.title}</td>
+                  <td className="colStatus">
+                    <span className={goal.completed ? 'statusCompleted' : 'statusActive'}>
+                      {goal.completed ? 'Completado' : 'Activo'}
+                    </span>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
 
       <div className="pagination">
         <button
