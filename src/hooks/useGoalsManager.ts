@@ -174,6 +174,7 @@ export function useGoalsManager() {
   }, [totalPages]);
 
   return {
+    goals,
     filter,
     setFilter,
     selectedId,

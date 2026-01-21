@@ -114,6 +114,7 @@
 }
 
 .addRow {
+  border-top: var(--border-1) solid var(--color-border-low);
   cursor: pointer;
   color: var(--color-content-high);
 }
@@ -223,7 +224,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-12);
+    gap: var(--space-8);
   }
 
   .goalsCounter {

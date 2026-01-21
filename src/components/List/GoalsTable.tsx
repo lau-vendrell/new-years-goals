@@ -14,6 +14,7 @@ interface Props {
   selectedId: string | null;
   onChangeFilter(next: GoalFilter): void;
   onSelect(id: string): void;
+  onEdit(id: string): void;
   counts: { active: number; completed: number };
   onAddGoalClick(): void;
   currentPage: number;
@@ -28,6 +29,7 @@ export default function GoalsTable({
   selectedId,
   onChangeFilter,
   onSelect,
+  onEdit,
   onAddGoalClick,
   currentPage,
   totalPages,
@@ -79,6 +81,7 @@ export default function GoalsTable({
                   key={goal.id}
                   className={rowClass}
                   onClick={() => onSelect(goal.id)}
+                  onDoubleClick={() => onEdit(goal.id)}
                   role="listitem"
                 >
                   <td className="colIndex">{formatGoalIndex(itemIndex)}</td>

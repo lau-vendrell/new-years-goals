@@ -109,26 +109,6 @@
   color: var(--color-danger-content);
 }
 
-.inline-input {
-  border: none;
-  border-bottom: var(--border-1) solid var(--color-border-low);
-  border-radius: var(--space-0);
-  padding: var(--space-6) var(--space-2);
-  font-size: var(--fs-14);
-  background: transparent;
-  font-weight: var(--fw-regular);
-  line-height: var(--lh-default);
-}
-
-.inline-input:focus {
-  outline: none;
-  border-bottom: var(--border-1) solid var(--color-active-content);
-}
-
-.inline-input.subtle {
-  color: var(--color-content-mid);
-}
-
 .canvas-empty {
   position: absolute;
   inset: 0;

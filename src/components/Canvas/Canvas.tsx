@@ -13,7 +13,7 @@ interface Props {
   onCardSelect(id: string): void;
   onToggleComplete(id: string): void;
   onDelete(id: string): void;
-  onUpdate(goal: Goal): void;
+  onEdit(id: string): void;
   onDragStart(event: PointerEvent, goal: Goal): void;
 }
 
@@ -26,7 +26,7 @@ export default function Canvas({
   onCardSelect,
   onToggleComplete,
   onDelete,
-  onUpdate,
+  onEdit,
   onDragStart
 }: Props) {
   return (
@@ -50,7 +50,7 @@ export default function Canvas({
                 selectionClass={selectionClass}
                 onToggleComplete={onToggleComplete}
                 onDelete={onDelete}
-                onUpdate={onUpdate}
+                onEdit={onEdit}
                 onSelect={onCardSelect}
                 isFocused={focusedId === goal.id}
                 onDragStart={(event) => onDragStart(event, goal)}

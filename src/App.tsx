@@ -3,8 +3,8 @@ import type { PointerEvent as ReactPointerEvent } from 'react';
 import { Canvas } from './components/Canvas';
 import { Header } from './components/Header';
 import { GoalsTable } from './components/List';
-import { AboutModal, NewGoalModal } from './components/Modals';
-import { UI_NUMBERS } from './constants';
+import { AboutModal, GoalModal } from './components/Modals';
+import { GOAL_STATUS, UI_NUMBERS } from './constants';
 import { useGoalsManager } from './hooks/useGoalsManager';
 import type { Goal, NewGoalInput } from './types';
 import './styles/layout.css';
@@ -29,11 +29,14 @@ type DragState = {
 
 function App() {
   const [aboutOpen, setAboutOpen] = useState(false);
-  const [newGoalOpen, setNewGoalOpen] = useState(false);
+  const [goalModalOpen, setGoalModalOpen] = useState(false);
+  const [goalModalMode, setGoalModalMode] = useState<'create' | 'edit'>('create');
+  const [editingGoalId, setEditingGoalId] = useState<string | null>(null);
   const [dragging, setDragging] = useState<DragState | null>(null);
   const bodyOverflowRef = useRef<string | null>(null);
 
   const {
+    goals,
     filter,
     setFilter,
     selectedId,
@@ -78,9 +81,50 @@ function App() {
     cardRefs.current[id] = el;
   };
 
-  const handleCreateGoal = (values: NewGoalInput) => {
-    addGoal(values);
+  const openCreateModal = () => {
+    setGoalModalMode('create');
+    setEditingGoalId(null);
+    setGoalModalOpen(true);
   };
+
+  const handleEditGoal = (id: string) => {
+    setGoalModalMode('edit');
+    setEditingGoalId(id);
+    setGoalModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setGoalModalOpen(false);
+    setEditingGoalId(null);
+  };
+
+  const handleModalSubmit = (values: { title: string; identitySentence: string }) => {
+    if (goalModalMode === 'create') {
+      const newGoal: NewGoalInput = {
+        id: crypto.randomUUID(),
+        title: values.title,
+        identitySentence: values.identitySentence,
+        status: GOAL_STATUS.active,
+        createdAt: Date.now()
+      };
+      addGoal(newGoal);
+      handleModalClose();
+      return;
+    }
+    if (!editingGoalId) return;
+    const current = goals.find((goal) => goal.id === editingGoalId);
+    if (!current) return;
+    handleUpdate({
+      ...current,
+      title: values.title,
+      identitySentence: values.identitySentence
+    });
+    handleModalClose();
+  };
+
+  const editingGoal = editingGoalId
+    ? goals.find((goal) => goal.id === editingGoalId) ?? null
+    : null;
 
   const startDrag = (e: ReactPointerEvent, goal: Goal) => {
     if (e.pointerType === 'mouse' && e.button !== 0) return;
@@ -181,7 +225,7 @@ function App() {
               onCardSelect={handleCardSelect}
               onToggleComplete={handleToggleComplete}
               onDelete={handleDelete}
-              onUpdate={handleUpdate}
+              onEdit={handleEditGoal}
               onDragStart={startDrag}
             />
           </div>
@@ -192,7 +236,8 @@ function App() {
               onChangeFilter={setFilter}
               selectedId={selectedId}
               onSelect={handleSidebarSelect}
-              onAddGoalClick={() => setNewGoalOpen(true)}
+              onEdit={handleEditGoal}
+              onAddGoalClick={openCreateModal}
               currentPage={currentPage}
               totalPages={totalPages}
               onPrevPage={goToPrevPage}
@@ -202,10 +247,16 @@ function App() {
           </aside>
         </div>
       </main>
-      <NewGoalModal
-        open={newGoalOpen}
-        onClose={() => setNewGoalOpen(false)}
-        onSubmit={handleCreateGoal}
+      <GoalModal
+        open={goalModalOpen}
+        mode={goalModalMode}
+        initialValues={
+          editingGoal
+            ? { title: editingGoal.title, identitySentence: editingGoal.identitySentence }
+            : undefined
+        }
+        onClose={handleModalClose}
+        onSubmit={handleModalSubmit}
       />
       <AboutModal open={aboutOpen} onClose={() => setAboutOpen(false)} />
     </div>

@@ -1,26 +1,39 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { GOAL_STATUS, UI_TEXT } from '../../constants';
-import type { NewGoalInput } from '../../types';
+import { UI_TEXT } from '../../constants';
 import Button from '../UI/Button';
 import Input from '../UI/Input';
 import ModalShell from './ModalShell';
 
+type Mode = 'create' | 'edit';
+
+type GoalFormValues = {
+  title: string;
+  identitySentence: string;
+};
+
 interface Props {
   open: boolean;
+  mode: Mode;
+  initialValues?: GoalFormValues;
   onClose(): void;
-  onSubmit(values: NewGoalInput): void;
+  onSubmit(values: GoalFormValues): void;
 }
 
-export default function NewGoalModal({ open, onClose, onSubmit }: Props) {
+export default function GoalModal({ open, mode, initialValues, onClose, onSubmit }: Props) {
   const [title, setTitle] = useState('');
   const [identitySentence, setIdentitySentence] = useState('');
   const titleRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     if (!open) return;
+    if (mode === 'edit' && initialValues) {
+      setTitle(initialValues.title);
+      setIdentitySentence(initialValues.identitySentence);
+      return;
+    }
     setTitle('');
     setIdentitySentence('');
-  }, [open]);
+  }, [open, mode, initialValues?.title, initialValues?.identitySentence]);
 
   const canSubmit = useMemo(() => title.trim().length > 0, [title]);
 
@@ -28,24 +41,25 @@ export default function NewGoalModal({ open, onClose, onSubmit }: Props) {
     event.preventDefault();
     if (!canSubmit) return;
     onSubmit({
-      id: crypto.randomUUID(),
       title: title.trim(),
-      identitySentence: identitySentence.trim(),
-      status: GOAL_STATUS.active,
-      createdAt: Date.now()
+      identitySentence: identitySentence.trim()
     });
     onClose();
   };
 
+  const modalTitle = mode === 'edit' ? UI_TEXT.editGoalTitle : UI_TEXT.newGoalTitle;
+  const primaryLabel = mode === 'edit' ? UI_TEXT.save : UI_TEXT.add;
+  const modalAriaLabel = mode === 'edit' ? UI_TEXT.editGoalAria : UI_TEXT.newGoalAria;
+
   return (
     <ModalShell
       open={open}
-      ariaLabel={UI_TEXT.newGoalAria}
+      ariaLabel={modalAriaLabel}
       onClose={onClose}
       initialFocusRef={titleRef}
     >
       <div className="goal-modal-header">
-        <h2 className="goal-modal-title">{UI_TEXT.newGoalTitle}</h2>
+        <h2 className="goal-modal-title">{modalTitle}</h2>
       </div>
       <form className="goal-modal-form" onSubmit={handleSubmit}>
         <label className="goal-modal-field">
@@ -80,7 +94,7 @@ export default function NewGoalModal({ open, onClose, onSubmit }: Props) {
             type="submit"
             disabled={!canSubmit}
           >
-            {UI_TEXT.add}
+            {primaryLabel}
           </Button>
         </div>
       </form>
